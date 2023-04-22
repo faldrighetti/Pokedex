@@ -1,0 +1,23 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "Pokedex hecho con la API de Pokemon",
+  "main": "pokedex.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faldrighetti/Pokedex.git"
+  },
+  "author": "Federico Aldrighetti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/faldrighetti/Pokedex/issues"
+  },
+  "homepage": "https://github.com/faldrighetti/Pokedex#readme",
+  "devDependencies": {
+    "cypress": "^12.10.0",
+    "jquery": "^3.6.4"
+  }
+}
