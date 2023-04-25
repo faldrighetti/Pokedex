@@ -18,6 +18,7 @@
   "homepage": "https://github.com/faldrighetti/Pokedex#readme",
   "devDependencies": {
     "cypress": "^12.10.0",
+    "http-server": "^14.1.1",
     "jquery": "^3.6.4"
   }
 }
