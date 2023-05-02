@@ -1,23 +1,28 @@
 const header = $("h1");
-header.text('Wiiii')
+const listaPokemones = $("#lista-pokemones");
+let indice = 1;
 
-// fetch("https://pokeapi.co/api/v2/pokemon/ditto")
-//     .then(respuesta => respuesta.json())
-//     .then(respuesta => {
-//         console.log(respuesta.name)
-//         header.text(respuesta.name);
-//     })
+function crearEntrada(nombre, url){
+    const entrada = document.createElement('p');
+    nombre[0] = nombre[0].toUpperCase();
+    entrada.textContent = "#" + indice + " " + nombre;
+    indice++;
+    entrada.addEventListener('click', () => {
+        console.log("La info está en " + url);
+    })
+    listaPokemones.append(entrada);
+    entrada.classList.add('list-group-item');
+    entrada.classList.add('list-group-item-action');
+    return entrada;
+}
 
-var myHeaders = new Headers();
-myHeaders.append("apikey", "UT21ndijqySe9EaVPbAMotxgWxbsXjxQ");
-
-var requestOptions = {
-  method: 'GET',
-  redirect: 'follow',
-  headers: myHeaders
-};
-
-fetch("https://api.apilayer.com/exchangerates_data/convert?to=EUR&from=USD&amount=40", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+fetch("https://pokeapi.co/api/v2/pokemon")
+    .then(respuesta => respuesta.json())
+    .then(respuesta => {
+        console.log(respuesta)
+        document.querySelector('#cantidad-pokemones').textContent = respuesta.count;
+        const pokemones = respuesta.results;
+        pokemones.forEach(pokemon => {
+            crearEntrada(pokemon.name, pokemon.url);
+        });
+})

@@ -4,7 +4,9 @@
   "description": "Pokedex hecho con la API de Pokemon",
   "main": "pokedex.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "empezar": "http-server",
+    "cypress-dev": "cypress-open"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,7 @@
   },
   "homepage": "https://github.com/faldrighetti/Pokedex#readme",
   "devDependencies": {
+    "bootstrap": "^5.2.3",
     "cypress": "^12.10.0",
     "http-server": "^14.1.1",
     "jquery": "^3.6.4"
