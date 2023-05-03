@@ -13,13 +13,20 @@
     <h1>Pokédex</h1>
     <h3>Hay <strong id="cantidad-pokemones"></strong> pokemones en la Pokédex.</h3>
 
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group" style="width: 18rem;">
+                <ul class="list-group list-group-flush" id="lista-pokemones"></ul>
+            </div>
+        </div>
 
-    <div class="list-group" style="width: 18rem;">
-        <ul class="list-group list-group-flush" id="lista-pokemones"></ul>
-    </div>
-    
-    <div class="container">
-        <ul ></ul>
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body" id="tarjeta-pokemon">
+                  <h5 class="card-title" id="id-pokemon"></h5><strong id="nombre-pokemon"></strong>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--Eliminar este script de node modules al final y poner el link para el deployment -->
