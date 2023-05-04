@@ -7,7 +7,7 @@ function mostrarPokemon(pokemon){
     imagen.setAttribute('src', foto);
     imagen.setAttribute('alt', `Imagen del pokemon ${nombre}`);
     document.querySelector('#pokemon-nombre').textContent = nombre;
-    document.querySelector('#pokemon-id').textContent = pokemon.id;
+    document.querySelector('#pokemon-id').textContent =`#${pokemon.id} `;
 }
 
 function cargarPokemon(nombre){
@@ -30,7 +30,6 @@ function mostrarListaPokemones(pokemones){
         entrada.setAttribute('href', '#');
         entrada.textContent = pokemon.name;
         entrada.addEventListener('click', () => {
-            console.log("Ir a buscar datos a " + url);
             cargarPokemon(nombre)
         })
         entrada.className = 'list-group-item list-group-item-action';
