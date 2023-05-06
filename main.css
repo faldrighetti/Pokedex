@@ -1,7 +1,17 @@
-#pokemon-contenedor {
-    display: none;
-  }
-  
+body, #pokemon{
+  background-color: #dd082f;
+  color: white;
+}
+
+#pokemon-id, #pokemon-nombre, #tipos, #habilidades, #movimientos{
+  color:#a082f8f5
+}
+
+#pokemon-imagen{
+  width: 50%;
+  height: 50%;
+}
+
 .type {
 color: white;
 }

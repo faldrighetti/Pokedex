@@ -39,6 +39,54 @@ function mostrarMovimientos(movimientos){
     })
 }
 
+function mostrarPaginador(cantidadPokemones){
+    // Acá tengo que mostrar la lista de páginas en el inicio, pero además
+    // cuando haga clic en una página, tiene que llamar a una función que
+    // le haga un fetch a esa página, que tome su next y su previous en sus
+    // respuesta.json y le asigne esos valores al onclick de los botones de
+    // < y >
+
+    //MEJOR: poner la actual y las anteriores y siguientes 4 a los costados. 
+
+    //La función sería
+    /*fetch('link').then(respuesta => respuesta.json())
+    .then(respuesta => {
+            const urlAnterior = respuesta.previous
+            const urlSiguiente = respuesta.next
+            if(urlAnterior){
+                botonAnterior.addEventListener('click', irAPagina(pagina anterior))
+            }
+            if(urlSiguiente){
+                botonSiguiente.addEventListener('click', irAPagina(pagina siguiente))
+            }            
+        })
+
+    function irAPagina(pagina){
+        windows.location.href(pagina);
+    }
+    */
+
+    const POKEMONES_POR_PAGINA = 20
+    const paginacion = document.querySelector('#paginacion');
+    const botonera = document.querySelector('#botones-numerados');
+    const botonAnterior = document.querySelector('#pagina-anterior');
+    //botonAnterior.addEventListener('click', '');
+    const botonSiguiente = document.querySelector('#pagina-siguiente');
+    //botonSiguiente.addEventListener('click', '');
+    let cantidadBotones = Math.trunc(cantidadPokemones/POKEMONES_POR_PAGINA) + 1
+
+    for(let i = 1; i <= cantidadBotones; i++){
+        const pagina = document.createElement('a');
+        pagina.textContent = i;
+        pagina.className = 'btn btn-info';
+        pagina.setAttribute('href', '#');
+        botonera.appendChild(pagina);
+    }  
+    
+    // ver numeroPagina, links para la next page, botones página anterior y siguiente
+    // < 1 2 3 4 5 6 7 ... 64> 
+}
+
 function mostrarPokemon(pokemon){ 
     if(document.querySelector('#ayuda')){
         document.querySelector('#ayuda').remove();
@@ -59,9 +107,8 @@ function cargarPokemon(nombre){
     const linkFetch = `https://pokeapi.co/api/v2/pokemon/${nombre}`
     fetch(linkFetch)
     .then((res) => res.json())
-    .then((r) => {
-        console.log(r)
-        mostrarPokemon(r);
+    .then((respuesta) => {
+        mostrarPokemon(respuesta);
     })
     .catch((error) => console.log("ERROR", error));
 }
@@ -89,10 +136,13 @@ function iniciar(){
     fetch("https://pokeapi.co/api/v2/pokemon")
         .then(respuesta => respuesta.json())
         .then(respuesta => {
+            console.log(respuesta)
             const totalPokemones = respuesta.count;
             const pokemones = respuesta.results;
+            const urlSiguiente = respuesta.next
             mostrarTotalPokemones(totalPokemones);
             mostrarListaPokemones(pokemones);
+            mostrarPaginador(totalPokemones);
         }).catch((error) => console.log("ERROR", error));
 }
 
