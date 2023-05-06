@@ -16,8 +16,9 @@ function mostrarHabilidades(habilidades){
 
     habilidades.forEach((habilidad) => {
         const spanHabilidad = document.createElement('span');
-        spanHabilidad.className = 'badge-info';
-        spanHabilidad.textContent = habilidad;
+        spanHabilidad.className = 'badge badge-info';
+        spanHabilidad.style.color = 'violet';
+        spanHabilidad.textContent = `${habilidad} `;
         $habilidades.appendChild(spanHabilidad);
     })
 }
@@ -27,12 +28,12 @@ function mostrarMovimientos(movimientos){
     $movimientos.innerHTML = '';
 
     movimientos.forEach((movimiento) => {
-        const spanMovimiento = document.createElement('span');
+        /*const spanMovimiento = document.createElement('span');
         spanMovimiento.className = 'badge-info';
         spanMovimiento.textContent = movimiento;
-        $movimientos.appendChild(spanMovimiento);
+        $movimientos.appendChild(spanMovimiento);*/
 
-
+        //Hay que crear una tabla
 
         //Hay que hacer una tabla con todos los movimientos que hay y sus versiones.
     })
