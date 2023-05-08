@@ -1,3 +1,5 @@
+const POKEMONES_POR_PAGINA = 20;
+
 function mostrarTipos(tipos){
     const $tipos = document.querySelector('#tipos-container');
     $tipos.innerHTML = '';
@@ -51,8 +53,8 @@ function mostrarPaginador(cantidadPokemones){
     //La función sería
     /*fetch('link').then(respuesta => respuesta.json())
     .then(respuesta => {
-            const urlAnterior = respuesta.previous
-            const urlSiguiente = respuesta.next
+            const urlAnterior = respuesta.previous;
+            const urlSiguiente = respuesta.next;
             if(urlAnterior){
                 botonAnterior.addEventListener('click', irAPagina(pagina anterior))
             }
@@ -60,31 +62,33 @@ function mostrarPaginador(cantidadPokemones){
                 botonSiguiente.addEventListener('click', irAPagina(pagina siguiente))
             }            
         })
-
-    function irAPagina(pagina){
-        windows.location.href(pagina);
-    }
     */
-
-    const POKEMONES_POR_PAGINA = 20
+    
     const paginacion = document.querySelector('#paginacion');
     const botonera = document.querySelector('#botones-numerados');
     const botonAnterior = document.querySelector('#pagina-anterior');
     //botonAnterior.addEventListener('click', '');
     const botonSiguiente = document.querySelector('#pagina-siguiente');
     //botonSiguiente.addEventListener('click', '');
-    let cantidadBotones = Math.trunc(cantidadPokemones/POKEMONES_POR_PAGINA) + 1
+    let cantidadBotones = Math.ceil(cantidadPokemones/POKEMONES_POR_PAGINA);
 
     for(let i = 1; i <= cantidadBotones; i++){
         const pagina = document.createElement('a');
         pagina.textContent = i;
         pagina.className = 'btn btn-info';
-        pagina.setAttribute('href', '#');
+        pagina.onclick = function(){
+            document.querySelector('#lista-pokemones').innerHTML = '';
+            iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*i} &limit=20`);
+        }
         botonera.appendChild(pagina);
     }  
     
     // ver numeroPagina, links para la next page, botones página anterior y siguiente
-    // < 1 2 3 4 5 6 7 ... 64> 
+    // < 1 2 3 4 5 6 7 ... 65> 
+}
+
+function asignarLink(numeroOffset){
+    return`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*numeroOffset} &limit=20`;
 }
 
 function mostrarPokemon(pokemon){ 
@@ -118,7 +122,6 @@ function mostrarListaPokemones(pokemones){
     pokemones.forEach(function (pokemon){
         const entrada = document.createElement('a');
         const {name: nombre} = pokemon;
-        //entrada.setAttribute('href', '#');
         entrada.textContent = nombre;
         entrada.addEventListener('click', () => {
             cargarPokemon(nombre);
@@ -132,18 +135,27 @@ function mostrarTotalPokemones(totalPokemones){
     document.querySelector('#cantidad-pokemones').textContent = totalPokemones;
 }
 
-function iniciar(){
-    fetch("https://pokeapi.co/api/v2/pokemon")
+function iniciar(link){
+    fetch(link)
         .then(respuesta => respuesta.json())
         .then(respuesta => {
             console.log(respuesta)
             const totalPokemones = respuesta.count;
             const pokemones = respuesta.results;
-            const urlSiguiente = respuesta.next
+            const urlSiguiente = respuesta.next;
+            const urlAnterior = respuesta.previous;
+            if(!document.querySelector('#botones-numerados').innerHTML){
+                mostrarPaginador(totalPokemones);
+            }
             mostrarTotalPokemones(totalPokemones);
             mostrarListaPokemones(pokemones);
-            mostrarPaginador(totalPokemones);
         }).catch((error) => console.log("ERROR", error));
+        /*
+            const botonAnterior = document.querySelector('#pagina-anterior');
+            //botonAnterior.addEventListener('click', '');
+            const botonSiguiente = document.querySelector('#pagina-siguiente');
+            //botonSiguiente.addEventListener('click', '');
+        */
 }
 
-iniciar();
+iniciar(`https://pokeapi.co/api/v2/pokemon`);
