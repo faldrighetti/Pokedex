@@ -3,6 +3,14 @@ body, #pokemon{
   color: white;
 }
 
+.color-destacado{
+  background: #1b87b9f5;
+}
+
+.card{
+  width: 40%;
+}
+
 #pokemon-id, #pokemon-nombre, #tipos, #habilidades, #movimientos{
   color:#a082f8f5
 }

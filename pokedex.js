@@ -66,17 +66,15 @@ function mostrarPaginador(cantidadPokemones){
     
     const paginacion = document.querySelector('#paginacion');
     const botonera = document.querySelector('#botones-numerados');
-    const botonAnterior = document.querySelector('#pagina-anterior');
-    //botonAnterior.addEventListener('click', '');
-    const botonSiguiente = document.querySelector('#pagina-siguiente');
-    //botonSiguiente.addEventListener('click', '');
     let cantidadBotones = Math.ceil(cantidadPokemones/POKEMONES_POR_PAGINA);
 
-    for(let i = 1; i <= cantidadBotones; i++){
+    for(let i = 0; i < cantidadBotones; i++){
         const pagina = document.createElement('a');
-        pagina.textContent = i;
+        pagina.textContent = i+1;
         pagina.className = 'btn btn-info';
         pagina.onclick = function(){
+            removerColor();
+            pagina.classList.add('color-destacado');
             document.querySelector('#lista-pokemones').innerHTML = '';
             iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*i} &limit=20`);
         }
@@ -87,8 +85,13 @@ function mostrarPaginador(cantidadPokemones){
     // < 1 2 3 4 5 6 7 ... 65> 
 }
 
-function asignarLink(numeroOffset){
-    return`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*numeroOffset} &limit=20`;
+function removerColor(){
+    let botonesPagina = document.getElementsByClassName('btn btn-info');
+    for(let i = 0; i < botonesPagina.length; i++){
+        if(botonesPagina[i].classList.contains('color-destacado')){
+            botonesPagina[i].classList.remove('color-destacado');
+        }
+    }
 }
 
 function mostrarPokemon(pokemon){ 
@@ -108,7 +111,7 @@ function mostrarPokemon(pokemon){
 }
 
 function cargarPokemon(nombre){
-    const linkFetch = `https://pokeapi.co/api/v2/pokemon/${nombre}`
+    const linkFetch = `https://pokeapi.co/api/v2/pokemon/${nombre}`;
     fetch(linkFetch)
     .then((res) => res.json())
     .then((respuesta) => {
@@ -144,18 +147,28 @@ function iniciar(link){
             const pokemones = respuesta.results;
             const urlSiguiente = respuesta.next;
             const urlAnterior = respuesta.previous;
+
+            const botonAnterior = document.querySelector('#pagina-anterior');
+            if(urlAnterior){
+                botonAnterior.onclick = function(){
+                    iniciar(urlAnterior); 
+                }
+            }
+
+            const botonSiguiente = document.querySelector('#pagina-siguiente');
+            if(urlSiguiente){
+                botonSiguiente.onclick = function(){
+                    iniciar(urlSiguiente);
+                    console.log(urlSiguiente);
+                }
+            }
+
             if(!document.querySelector('#botones-numerados').innerHTML){
                 mostrarPaginador(totalPokemones);
             }
             mostrarTotalPokemones(totalPokemones);
             mostrarListaPokemones(pokemones);
         }).catch((error) => console.log("ERROR", error));
-        /*
-            const botonAnterior = document.querySelector('#pagina-anterior');
-            //botonAnterior.addEventListener('click', '');
-            const botonSiguiente = document.querySelector('#pagina-siguiente');
-            //botonSiguiente.addEventListener('click', '');
-        */
 }
 
 iniciar(`https://pokeapi.co/api/v2/pokemon`);
