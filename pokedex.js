@@ -1,6 +1,10 @@
 const POKEMONES_POR_PAGINA = 20;
 const url = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`;
 
+function cambiarAMayuscula(nombre){
+    return nombre[0].toUpperCase() + nombre.slice(1);
+  }
+
 function mostrarTipos(tipos){
     const $tipos = document.querySelector('#tipos-container');
     $tipos.innerHTML = '';
@@ -43,7 +47,6 @@ function mostrarMovimientos(movimientos){
 }
 
 function mostrarPaginador(cantidadPokemones){
-
     const botonera = document.querySelector('#botones-numerados');
     let cantidadBotones = Math.ceil(cantidadPokemones/POKEMONES_POR_PAGINA);
 
@@ -53,21 +56,23 @@ function mostrarPaginador(cantidadPokemones){
         pagina.className = 'btn btn-info';
         pagina.onclick = function(){
             removerColor();
-            pagina.classList.add('active');
+            pagina.classList.add('color-destacado');
             document.querySelector('#lista-pokemones').innerHTML = '';
             iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*i} &limit=20`);
         }
         botonera.appendChild(pagina);
-    }  
-
+    }
 }
 
 function removerColor(){
     let botonesPagina = document.getElementsByClassName('btn btn-info');
-    for(let i = 0; i < botonesPagina.length; i++){
+    let i = 0;
+    while(i < botonesPagina.length){
         if(botonesPagina[i].classList.contains('color-destacado')){
             botonesPagina[i].classList.remove('color-destacado');
-        }
+            break;
+        };
+        i++;
     }
 }
 
@@ -79,8 +84,8 @@ function mostrarPokemon(pokemon){
     types: tipos, abilities: habilidades, moves: movimientos} = pokemon;
     const imagen = document.querySelector('#pokemon-imagen');
     imagen.setAttribute('src', foto);
-    imagen.setAttribute('alt', `Imagen del pokemon ${nombre}`);
-    document.querySelector('#pokemon-nombre').textContent = nombre;
+    imagen.setAttribute('alt', `Imagen del pokemon ${cambiarAMayuscula(nombre)}`);
+    document.querySelector('#pokemon-nombre').textContent = cambiarAMayuscula(nombre);
     document.querySelector('#pokemon-id').textContent =`#${pokemon.id} `;
     mostrarTipos(tipos.map((items) => items.type.name));
     mostrarHabilidades(habilidades.map((items) => items.ability.name));
@@ -102,7 +107,7 @@ function mostrarListaPokemones(pokemones){
     pokemones.forEach(function (pokemon){
         const entrada = document.createElement('a');
         const {name: nombre} = pokemon;
-        entrada.textContent = nombre;
+        entrada.textContent = cambiarAMayuscula(nombre);
         entrada.addEventListener('click', () => {
             cargarPokemon(nombre);
         })
