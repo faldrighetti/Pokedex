@@ -1,4 +1,5 @@
 const POKEMONES_POR_PAGINA = 20;
+const url = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`;
 
 function mostrarTipos(tipos){
     const $tipos = document.querySelector('#tipos-container');
@@ -42,29 +43,7 @@ function mostrarMovimientos(movimientos){
 }
 
 function mostrarPaginador(cantidadPokemones){
-    // Acá tengo que mostrar la lista de páginas en el inicio, pero además
-    // cuando haga clic en una página, tiene que llamar a una función que
-    // le haga un fetch a esa página, que tome su next y su previous en sus
-    // respuesta.json y le asigne esos valores al onclick de los botones de
-    // < y >
 
-    //MEJOR: poner la actual y las anteriores y siguientes 4 a los costados. 
-
-    //La función sería
-    /*fetch('link').then(respuesta => respuesta.json())
-    .then(respuesta => {
-            const urlAnterior = respuesta.previous;
-            const urlSiguiente = respuesta.next;
-            if(urlAnterior){
-                botonAnterior.addEventListener('click', irAPagina(pagina anterior))
-            }
-            if(urlSiguiente){
-                botonSiguiente.addEventListener('click', irAPagina(pagina siguiente))
-            }            
-        })
-    */
-    
-    const paginacion = document.querySelector('#paginacion');
     const botonera = document.querySelector('#botones-numerados');
     let cantidadBotones = Math.ceil(cantidadPokemones/POKEMONES_POR_PAGINA);
 
@@ -74,15 +53,13 @@ function mostrarPaginador(cantidadPokemones){
         pagina.className = 'btn btn-info';
         pagina.onclick = function(){
             removerColor();
-            pagina.classList.add('color-destacado');
+            pagina.classList.add('active');
             document.querySelector('#lista-pokemones').innerHTML = '';
             iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*i} &limit=20`);
         }
         botonera.appendChild(pagina);
     }  
-    
-    // ver numeroPagina, links para la next page, botones página anterior y siguiente
-    // < 1 2 3 4 5 6 7 ... 65> 
+
 }
 
 function removerColor(){
@@ -145,19 +122,22 @@ function iniciar(link){
             console.log(respuesta)
             const totalPokemones = respuesta.count;
             const pokemones = respuesta.results;
-            const urlSiguiente = respuesta.next;
+            const urlSiguiente = respuesta.next; 
             const urlAnterior = respuesta.previous;
 
             const botonAnterior = document.querySelector('#pagina-anterior');
             if(urlAnterior){
                 botonAnterior.onclick = function(){
-                    iniciar(urlAnterior); 
+                    document.querySelector('#lista-pokemones').innerHTML = '';
+                    iniciar(urlAnterior);
+                    console.log(`${urlAnterior}`);
                 }
             }
 
             const botonSiguiente = document.querySelector('#pagina-siguiente');
             if(urlSiguiente){
                 botonSiguiente.onclick = function(){
+                    document.querySelector('#lista-pokemones').innerHTML = '';
                     iniciar(urlSiguiente);
                     console.log(urlSiguiente);
                 }
@@ -171,4 +151,4 @@ function iniciar(link){
         }).catch((error) => console.log("ERROR", error));
 }
 
-iniciar(`https://pokeapi.co/api/v2/pokemon`);
+iniciar(url);
