@@ -11,6 +11,13 @@
 </head>
 <body>
     <h1>Pokédex</h1>
+
+    <div id="paginacion">
+        <div id="botones-numerados"></div>
+        <a type="button" class="btn btn-primary" id="pagina-anterior"><</a>
+        <a type="button" class="btn btn-primary" id="pagina-siguiente">></a>
+    </div>
+
     <div class="row">
         <h3>Hay <strong id="cantidad-pokemones"></strong> pokemones en la Pokédex.</h3>
     </div>
@@ -18,7 +25,7 @@
     <div class="row">
         <div class="col-4">
             <div class="list-group" id="lista-pokemones">
-                <ul class="list-group list-group-flush"></ul>
+                <ul class="list-group list-group-flush" id="ul-pokemones"></ul>
             </div>
         </div>
 
@@ -27,19 +34,20 @@
             <div class="card">
                 <img id="pokemon-imagen" class="card-img-top">
                 <div class="card-body">
-                  <h5 class="card-title"><strong id="pokemon-nombre">...</strong>(<strong id="pokemon-id">...</strong>)</h5>
+                  <h5 class="card-title"><strong id="pokemon-id"></strong><strong id="pokemon-nombre">...</strong></h5>
                     <div id="tipos">
                         <strong>Tipos</strong>
-                        <span class="badge text-bg-primary">Primary</span>
-                        <span class="badge text-bg-secondary">Secondary</span>
+                        <div id="tipos-container"></div>
                     </div>
 
                     <div id="habilidades">
-
+                        <strong>Habilidades</strong>
+                        <div id="habilidades-container"></div>
                     </div>
 
                     <div id="movimientos">
-                        
+                        <strong>Movimientos</strong>
+                        <div id="movimientos-container"></div>
                     </div>
                 </div>
             </div>
