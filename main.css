@@ -84,3 +84,7 @@ background: #68a192;
 .shadow {
 background: #747474;
 }
+
+.oculto{
+  display: none;
+}

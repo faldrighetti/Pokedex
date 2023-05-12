@@ -31,18 +31,31 @@ function mostrarHabilidades(habilidades){
 }
 
 function mostrarMovimientos(movimientos){
-    const $movimientos = document.querySelector('#movimientos-container');
-    $movimientos.innerHTML = '';
+    const tablaMovimientos = document.querySelector('#movimientos-container');
 
-    movimientos.forEach((movimiento) => {
-        /*const spanMovimiento = document.createElement('span');
-        spanMovimiento.className = 'badge-info';
-        spanMovimiento.textContent = movimiento;
-        $movimientos.appendChild(spanMovimiento);*/
+    tablaMovimientos.innerHTML = '';
+    tablaMovimientos.classList.remove('oculto');
 
-        //Hay que crear una tabla
+    movimientos.forEach((movimiento, version) => {
+        const filaTabla = document.createElement('tr');
+        const columnaMovimiento = document.createElement('td');
+        const columnaVersion = document.createElement('td');
+
+        columnaMovimiento.textContent = movimiento;
+        columnaVersion.textContent = version;
+
+        filaTabla.appendChild(columnaMovimiento);
+        filaTabla.appendChild(columnaVersion);
+        tablaMovimientos.appendChild(filaTabla);
 
         //Hay que hacer una tabla con todos los movimientos que hay y sus versiones.
+
+        /*
+        Movimiento          Versiones
+        razor-wind          crystal gold-silver
+        swords-dance        omega-ruby-alpha...
+        cut                 omega-ruby-alpha...
+        */
     })
 }
 
@@ -80,6 +93,7 @@ function mostrarPokemon(pokemon){
     if(document.querySelector('#ayuda')){
         document.querySelector('#ayuda').remove();
     }
+    console.log(pokemon);
     const {name: nombre, sprites: {front_default: foto}, 
     types: tipos, abilities: habilidades, moves: movimientos} = pokemon;
     const imagen = document.querySelector('#pokemon-imagen');
@@ -89,7 +103,10 @@ function mostrarPokemon(pokemon){
     document.querySelector('#pokemon-id').textContent =`#${pokemon.id} `;
     mostrarTipos(tipos.map((items) => items.type.name));
     mostrarHabilidades(habilidades.map((items) => items.ability.name));
-    mostrarMovimientos(movimientos.map((items) => items.move.name));
+    mostrarMovimientos(movimientos.map((items) => {
+        items.move.name, items.move.version_group.name;
+        } 
+    ));
 }
 
 function cargarPokemon(nombre){
