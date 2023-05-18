@@ -30,32 +30,26 @@ function mostrarHabilidades(habilidades){
     })
 }
 
-function mostrarMovimientos(movimientos){
-    const tablaMovimientos = document.querySelector('#movimientos-container');
-
+function mostrarMovimientos(movimientos, versiones){
+    const tablaMovimientos = document.querySelector('#movimientos-versiones');
     tablaMovimientos.innerHTML = '';
-    tablaMovimientos.classList.remove('oculto');
 
-    movimientos.forEach((movimiento, version) => {
+    movimientos.forEach((movimiento) => {
         const filaTabla = document.createElement('tr');
         const columnaMovimiento = document.createElement('td');
+        columnaMovimiento.textContent = movimiento;
+        filaTabla.appendChild(columnaMovimiento);
+
         const columnaVersion = document.createElement('td');
 
-        columnaMovimiento.textContent = movimiento;
-        columnaVersion.textContent = version;
-
-        filaTabla.appendChild(columnaMovimiento);
+        versiones.forEach((version) => {
+            const $version = document.createElement('span');
+            $version.textContent = version;
+            columnaVersion.appendChild($version);
+            
+        })
         filaTabla.appendChild(columnaVersion);
         tablaMovimientos.appendChild(filaTabla);
-
-        //Hay que hacer una tabla con todos los movimientos que hay y sus versiones.
-
-        /*
-        Movimiento          Versiones
-        razor-wind          crystal gold-silver
-        swords-dance        omega-ruby-alpha...
-        cut                 omega-ruby-alpha...
-        */
     })
 }
 
@@ -71,7 +65,7 @@ function mostrarPaginador(cantidadPokemones){
             removerColor();
             pagina.classList.add('color-destacado');
             document.querySelector('#lista-pokemones').innerHTML = '';
-            iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*i} &limit=20`);
+            iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${POKEMONES_POR_PAGINA*i}&limit=20`);
         }
         botonera.appendChild(pagina);
     }
@@ -103,10 +97,9 @@ function mostrarPokemon(pokemon){
     document.querySelector('#pokemon-id').textContent =`#${pokemon.id} `;
     mostrarTipos(tipos.map((items) => items.type.name));
     mostrarHabilidades(habilidades.map((items) => items.ability.name));
-    mostrarMovimientos(movimientos.map((items) => {
-        items.move.name, items.move.version_group.name;
-        } 
-    ));
+    const movimiento = movimientos.map((items) => items.move.name);
+    const versiones = movimientos.map((items) => items.version_group_details.map((itemDetalles) => itemDetalles.version_group.name));
+    mostrarMovimientos(movimiento, versiones);
 }
 
 function cargarPokemon(nombre){
@@ -121,7 +114,7 @@ function cargarPokemon(nombre){
 
 function mostrarListaPokemones(pokemones){
     const listaPokemones = document.querySelector('#lista-pokemones');
-    pokemones.forEach(function (pokemon){
+    pokemones.forEach(function(pokemon){
         const entrada = document.createElement('a');
         const {name: nombre} = pokemon;
         entrada.textContent = cambiarAMayuscula(nombre);
@@ -141,7 +134,6 @@ function iniciar(link){
     fetch(link)
         .then(respuesta => respuesta.json())
         .then(respuesta => {
-            console.log(respuesta)
             const totalPokemones = respuesta.count;
             const pokemones = respuesta.results;
             const urlSiguiente = respuesta.next; 
@@ -152,7 +144,6 @@ function iniciar(link){
                 botonAnterior.onclick = function(){
                     document.querySelector('#lista-pokemones').innerHTML = '';
                     iniciar(urlAnterior);
-                    console.log(`${urlAnterior}`);
                 }
             }
 
@@ -161,7 +152,6 @@ function iniciar(link){
                 botonSiguiente.onclick = function(){
                     document.querySelector('#lista-pokemones').innerHTML = '';
                     iniciar(urlSiguiente);
-                    console.log(urlSiguiente);
                 }
             }
 
