@@ -30,27 +30,31 @@ function mostrarHabilidades(habilidades){
     })
 }
 
-function mostrarMovimientos(movimientos, versiones){
-    const tablaMovimientos = document.querySelector('#movimientos-versiones');
-    tablaMovimientos.innerHTML = '';
+function mostrarMovimientos(movimientos){
+    const $movimientos = document.querySelector('#movimientos-versiones');
 
     movimientos.forEach((movimiento) => {
-        const filaTabla = document.createElement('tr');
-        const columnaMovimiento = document.createElement('td');
-        columnaMovimiento.textContent = movimiento;
-        filaTabla.appendChild(columnaMovimiento);
+        const { movimiento: nombreMovimiento, versiones } = movimiento;
+        const $movimientoFila = document.createElement('tr');
+        const $movimiento = document.createElement('th');
+        $movimiento.setAttribute('scope', 'row');
+        $movimiento.textContent = nombreMovimiento;
+        $movimientoFila.appendChild($movimiento);
 
-        const columnaVersion = document.createElement('td');
+        const $versiones = document.createElement('td');
 
         versiones.forEach((version) => {
-            const $version = document.createElement('span');
-            $version.textContent = version;
-            columnaVersion.appendChild($version);
-            
-        })
-        filaTabla.appendChild(columnaVersion);
-        tablaMovimientos.appendChild(filaTabla);
-    })
+        const $version = document.createElement('span');
+        $version.className = 'badge';
+        $version.style.color = 'violet';
+        $version.textContent = version;
+        $versiones.appendChild($version);
+        });
+
+        $movimientoFila.appendChild($versiones);
+        $movimientos.appendChild($movimientoFila);
+    });
+
 }
 
 function mostrarPaginador(cantidadPokemones){
@@ -97,9 +101,10 @@ function mostrarPokemon(pokemon){
     document.querySelector('#pokemon-id').textContent =`#${pokemon.id} `;
     mostrarTipos(tipos.map((items) => items.type.name));
     mostrarHabilidades(habilidades.map((items) => items.ability.name));
-    const movimiento = movimientos.map((items) => items.move.name);
-    const versiones = movimientos.map((items) => items.version_group_details.map((itemDetalles) => itemDetalles.version_group.name));
-    mostrarMovimientos(movimiento, versiones);
+    mostrarMovimientos(movimientos.map((items) => ({
+        movimiento: items.move.name,
+        versiones: items.version_group_details.map((itemDetalles) => itemDetalles.version_group.name)
+    })));
 }
 
 function cargarPokemon(nombre){
