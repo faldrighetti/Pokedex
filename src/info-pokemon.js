@@ -1,14 +1,15 @@
+import { cambiarAMayuscula } from "./lista.js";
+
 export function mostrarPokemon(pokemon){ 
     if(document.querySelector('#ayuda')){
         document.querySelector('#ayuda').remove();
     }
-    console.log(pokemon);
     const {name: nombre, sprites: {front_default: foto}, 
     types: tipos, abilities: habilidades, moves: movimientos} = pokemon;
     const imagen = document.querySelector('#pokemon-imagen');
     imagen.setAttribute('src', foto);
     imagen.setAttribute('alt', `Imagen del pokemon ${cambiarAMayuscula(nombre)}`);
-    document.querySelector('#pokemon-nombre').textContent = cambiarAMayuscula(nombre);
+    document.querySelector('#pokemon-nombre').textContent = nombre;
     document.querySelector('#pokemon-id').textContent =`#${pokemon.id} `;
     mostrarTipos(tipos.map((items) => items.type.name));
     mostrarHabilidades(habilidades.map((items) => items.ability.name));
@@ -58,11 +59,11 @@ export function mostrarMovimientos(movimientos){
         const $versiones = document.createElement('td');
 
         versiones.forEach((version) => {
-        const $version = document.createElement('span');
-        $version.className = 'badge';
-        $version.style.color = 'violet';
-        $version.textContent = version;
-        $versiones.appendChild($version);
+            const $version = document.createElement('span');
+            $version.className = 'badge';
+            $version.style.color = 'violet';
+            $version.textContent = version;
+            $versiones.appendChild($version);
         });
 
         $movimientoFila.appendChild($versiones);

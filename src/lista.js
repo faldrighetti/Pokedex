@@ -1,3 +1,5 @@
+import * as fetchFile from "./fetch.js";
+
 export function cambiarAMayuscula(nombre){
     return nombre[0].toUpperCase() + nombre.slice(1);
   }
@@ -9,10 +11,10 @@ export function mostrarListaPokemones(pokemones){
         const {name: nombre} = pokemon;
         entrada.textContent = cambiarAMayuscula(nombre);
         entrada.addEventListener('click', () => {
-            cargarPokemon(nombre);
+            fetchFile.cargarPokemon(nombre);
         })
         entrada.className = 'list-group-item list-group-item-action';
-        listaPokemones.append(entrada);
+        listaPokemones.appendChild(entrada);
     })
 }
 
