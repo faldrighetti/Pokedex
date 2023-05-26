@@ -19,12 +19,11 @@ export function mostrarPaginador(cantidadPokemones){
     }
 }
 
-export function removerColor(){
+function removerColor(){
     let botonesPagina = document.getElementsByClassName('btn btn-info');
     let i = 0;
     while(i < botonesPagina.length){
-        if(botonesPagina[i].classList.contains('color-destacado')){
-            botonesPagina[i].classList.remove('color-destacado');
+        if(botonesPagina[i].classList.contains('active')){
             botonesPagina[i].classList.remove('active');
             break;
         };
