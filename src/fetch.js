@@ -21,6 +21,10 @@ export function iniciar(link){
             let urlSiguiente = respuesta.next;
             let urlAnterior = respuesta.previous;
 
+            if(!document.querySelector('#botones-numerados').innerHTML){
+                paginador.mostrarPaginador(totalPokemones);
+            }
+
             const botonAnterior = document.querySelector('#pagina-anterior');
             if(urlAnterior){
                 botonAnterior.onclick = function(){
@@ -35,10 +39,6 @@ export function iniciar(link){
                     document.querySelector('#lista-pokemones').innerHTML = '';
                     iniciar(urlSiguiente);
                 }
-            }
-
-            if(!document.querySelector('#botones-numerados').innerHTML){
-                paginador.mostrarPaginador(totalPokemones);
             }
             
             lista.mostrarTotalPokemones(totalPokemones);

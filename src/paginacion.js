@@ -20,6 +20,7 @@ export function mostrarPaginador(cantidadPokemones){
             moduloFetch.iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${(POKEMONES_POR_PAGINA*i)}&limit=20`);
         }
         botonera.appendChild(pagina);
+        document.querySelector('#pagina-1').classList.add('bg-primary');
     }
     return botonera;
 }
@@ -28,8 +29,8 @@ function removerColor(){
     let botonesPagina = document.getElementsByClassName('btn btn-info');
     let i = 0;
     while(i < botonesPagina.length){
-        if(botonesPagina[i].classList.contains('active')){
-            botonesPagina[i].classList.remove('active');
+        if(botonesPagina[i].classList.contains('bg-primary')){
+            botonesPagina[i].classList.remove('bg-primary');
             break;
         };
         i++;
@@ -50,8 +51,8 @@ export function procesarBotonPagina(urlAnterior, urlSiguiente, botonAnterior, bo
 
 export function activarBoton(boton, numeroPagina){
     if(document.getElementById(`pagina-${numeroPagina}`)){
-        boton.classList.add('active');
+        boton.classList.add('bg-primary');
     } else if (document.getElementById(`pagina-${numeroPagina}`).contains('active')){
-        boton.classList.remove(('active'));
+        boton.classList.remove(('bg-primary'));
     }
 }

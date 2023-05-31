@@ -5,7 +5,7 @@ const url = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`;
 pokedex.iniciar(url);
 
 /*Errores: 
--No muestra en qué página se está. Debería hacerlo al hacer clic en una página, y en la página 1 al empezar.
+-No cambia el active de botón al presionar en siguiente
 */
 
 //Recordar: hay que abrir esto en http-server siempre para poder verlo bien. Sino va a dar error de CORS.
