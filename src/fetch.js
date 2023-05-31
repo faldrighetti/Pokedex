@@ -40,7 +40,7 @@ export function iniciar(link){
             if(!document.querySelector('#botones-numerados').innerHTML){
                 paginador.mostrarPaginador(totalPokemones);
             }
-            console.log(link)
+            
             lista.mostrarTotalPokemones(totalPokemones);
             lista.mostrarListaPokemones(pokemones);
             paginador.procesarBotonPagina(urlAnterior, urlSiguiente, botonAnterior, botonSiguiente);

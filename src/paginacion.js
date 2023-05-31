@@ -1,7 +1,7 @@
 import * as moduloFetch from './fetch.js'
 
-const CANTIDAD_PAGINAS = 65;
-const POKEMONES_POR_PAGINA = 20;
+export const CANTIDAD_PAGINAS = 65;
+export const POKEMONES_POR_PAGINA = 20;
 
 export function mostrarPaginador(cantidadPokemones){
     const botonera = document.querySelector('#botones-numerados');
@@ -15,7 +15,7 @@ export function mostrarPaginador(cantidadPokemones){
         pagina.href = '#';
         pagina.onclick = function(){
             removerColor();
-            pagina.classList.add('active');
+            activarBoton(pagina, i+1);
             document.querySelector('#lista-pokemones').innerHTML = '';
             moduloFetch.iniciar(`https://pokeapi.co/api/v2/pokemon?offset=${(POKEMONES_POR_PAGINA*i)}&limit=20`);
         }
@@ -45,5 +45,13 @@ export function procesarBotonPagina(urlAnterior, urlSiguiente, botonAnterior, bo
         botonSiguiente.classList.add('disabled');
     } else if (botonSiguiente.classList.contains('disabled')){
         botonSiguiente.classList.remove('disabled');
+    }
+}
+
+export function activarBoton(boton, numeroPagina){
+    if(document.getElementById(`pagina-${numeroPagina}`)){
+        boton.classList.add('active');
+    } else if (document.getElementById(`pagina-${numeroPagina}`).contains('active')){
+        boton.classList.remove(('active'));
     }
 }
