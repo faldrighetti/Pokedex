@@ -6,7 +6,6 @@ pokedex.iniciar(url);
 
 /*Errores: 
 -No muestra en qué página se está. Debería hacerlo al hacer clic en una página, y en la página 1 al empezar.
--Cuando esto se arregle, deshabilitar el botón < al estar en la página 1, y el botón > al estar en la última página.
 */
 
 //Recordar: hay que abrir esto en http-server siempre para poder verlo bien. Sino va a dar error de CORS.

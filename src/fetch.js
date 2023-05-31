@@ -18,8 +18,8 @@ export function iniciar(link){
         .then(respuesta => {
             const totalPokemones = respuesta.count;
             const pokemones = respuesta.results;
-            const urlSiguiente = respuesta.next; 
-            const urlAnterior = respuesta.previous;
+            let urlSiguiente = respuesta.next;
+            let urlAnterior = respuesta.previous;
 
             const botonAnterior = document.querySelector('#pagina-anterior');
             if(urlAnterior){
@@ -40,8 +40,9 @@ export function iniciar(link){
             if(!document.querySelector('#botones-numerados').innerHTML){
                 paginador.mostrarPaginador(totalPokemones);
             }
-            
+            console.log(link)
             lista.mostrarTotalPokemones(totalPokemones);
             lista.mostrarListaPokemones(pokemones);
+            paginador.procesarBotonPagina(urlAnterior, urlSiguiente, botonAnterior, botonSiguiente);
         }).catch((error) => console.log("ERROR", error));
 }

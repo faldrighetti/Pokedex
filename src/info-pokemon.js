@@ -9,7 +9,7 @@ export function mostrarPokemon(pokemon){
     const imagen = document.querySelector('#pokemon-imagen');
     imagen.setAttribute('src', foto);
     imagen.setAttribute('alt', `Imagen del pokemon ${cambiarAMayuscula(nombre)}`);
-    document.querySelector('#pokemon-nombre').textContent = nombre;
+    document.querySelector('#pokemon-nombre').textContent = `${cambiarAMayuscula(nombre)}`;
     document.querySelector('#pokemon-id').textContent =`#${pokemon.id} `;
     mostrarTipos(tipos.map((items) => items.type.name));
     mostrarHabilidades(habilidades.map((items) => items.ability.name));
