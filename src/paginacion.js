@@ -22,10 +22,9 @@ export function mostrarPaginador(cantidadPokemones){
         botonera.appendChild(pagina);
         document.querySelector('#pagina-1').classList.add('bg-primary');
     }
-    return botonera;
 }
 
-function removerColor(){
+export function removerColor(){
     let botonesPagina = document.getElementsByClassName('btn btn-info');
     let i = 0;
     while(i < botonesPagina.length){
