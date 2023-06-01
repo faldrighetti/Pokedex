@@ -3,10 +3,6 @@ body, #pokemon{
   color: white;
 }
 
-.color-destacado{
-  background: #1b87b9f5;
-}
-
 .card{
   width: 80%;
 }
