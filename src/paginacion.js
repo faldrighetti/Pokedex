@@ -12,7 +12,6 @@ export function mostrarPaginador(cantidadPokemones){
         pagina.textContent = i + 1;
         pagina.className = 'btn btn-info';
         pagina.id = `pagina-${i+1}`;
-        pagina.style.fontSize = '90%';
         pagina.href = '#';
         pagina.onclick = function(){
             removerColor();
