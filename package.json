@@ -5,9 +5,10 @@
   "main": "pokedex.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "empezar": "http-server",
+    "server": "http-server",
     "cypress-dev": "cypress open",
-    "test-dev": "run-p start cypress-dev"
+    "test-dev": "run-p start cypress-dev",
+    "run-server-test": "run-p server cypress-dev"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "bootstrap": "^5.2.3",
     "cypress": "^12.13.0",
     "http-server": "^14.1.1",
-    "jquery": "^3.6.4"
+    "jquery": "^3.6.4",
+    "npm-run-all": "^4.1.5"
   }
 }

@@ -4,22 +4,27 @@ const POKEMONES_POR_PAGINA = 20;
 
 describe('Pokedex', () => {
 
-  /*beforeEach(() => {
-    cy.visit(URL);
-    cy.intercept('GET', 'https://pokeapi.co/api/v2/pokemon?offset=840&limit=20', { fixture: 'pokemonData.json' }).as('pokemonRequest');
-  })*/
-
   beforeEach(() => {
     cy.visit(URL); 
   });
 
-  it('Debería obtener los datos de la API correctamente', () => {
+  /*it('Debería obtener los datos de la API correctamente', () => {
+    cy.server();
+    cy.intercept('GET', 'https://pokeapi.co/api/v2/pokemon?offset=840&limit=20', { fixture: 'pokemonData.json' }).as('pokemonRequest');
     cy.wait('@pokemonRequest').then((interception) => {
       const response = interception.response.body;
       expect(response).to.have.property('count', 20);
       expect(response.results).to.have.length(20);
     });
-  });
+  });*/
+
+  /*it('Debería obtener los datos de la API correctamente', () => {
+    cy.wait('@pokemonRequest').then((interception) => {
+      const response = interception.response.body;
+      expect(response).to.have.property('count', 20);
+      expect(response.results).to.have.length(20);
+    });
+  });*/
 
   it('Asegura que se abra en la primera página', () => {
     const linkPrimeraPagina = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`;
@@ -31,11 +36,13 @@ describe('Pokedex', () => {
   });
 
   it('Asegura que la lista tenga como máximo 20 elementos por página', () => {
-    const listaPagina = cy.get(".list-group-item list-group-item-action");
-    listaPagina.should('have.length', POKEMONES_POR_PAGINA); 
+    // --- Acá tiene que ir una aserción que haga la llamada a la API de la página, y ahí llamar a la función de abajo
+
+    revisarElementosLista();
   });
 
-  it('Asegura que los botones de anterior y siguiente funcionen', () => {
+  it('Asegura que los botones de anterior y siguiente funcionen', () => { // NO FUNCIONA
+    // --- Acá tiene que ir una aserción que haga la llamada a la API de la página, y ahí llamar a la función de abajo
     const botonAnterior = cy.get('#pagina-anterior');
     const botonSiguiente = cy.get('#pagina-siguiente');
 
@@ -46,13 +53,16 @@ describe('Pokedex', () => {
   /*
   Tests para hacer:
   Revisar que cada página tenga como máximo 20 elementos en la lista.
+  Para eso tengo que:
+  1-Chequear llamada a la API
+  2-Revisar la lista después de la llamada
   Botones de anterior y siguiente
   */
 })
 
 function revisarElementosLista(){
-  const lista = cy.get('#lista-pokemones');
-  lista.children().should('have.length', POKEMONES_POR_PAGINA);
+  const listaPagina = cy.get(".list-group-item list-group-item-action");
+  listaPagina.should('have.length', POKEMONES_POR_PAGINA); 
 }
 
 function revisarBoton(boton, pagina){
@@ -70,15 +80,6 @@ function revisarBoton(boton, pagina){
           revisarFetch(linkActual);
         });
       });
-
-  /*const elemento = cy.get(`#pagina-${pagina}`);
-  const lista = cy.get('#ul-pokemones');
-  cy.get(boton).click();
-  lista.children().should ('be.equal.to', paginaNueva);*/
-
-  //Despues para llamar la función hago
-  //revisarBoton(botonAnterior, pagina, pagina - 1);
-  //revisarBoton(botonSiguiente, pagina, pagina + 1);
 }
 
 function revisarFetch(linkFetch){
